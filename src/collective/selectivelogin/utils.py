@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Helper functions."""
 from collective.selectivelogin.interfaces import ISelectiveLoginSettings
 from plone import api
 

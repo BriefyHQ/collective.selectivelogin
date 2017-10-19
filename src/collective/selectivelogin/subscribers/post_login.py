@@ -1,8 +1,8 @@
+# -*- coding: utf-8 -*-
 """Login handlers."""
 from AccessControl.SecurityManagement import noSecurityManager
 from collective.selectivelogin import utils
 from plone import api
-from Products.statusmessages.interfaces import IStatusMessage
 from zope.globalrequest import getRequest
 
 

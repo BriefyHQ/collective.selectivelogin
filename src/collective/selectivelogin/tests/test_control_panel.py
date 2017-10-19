@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
+"""Test control panel."""
 from collective.selectivelogin.interfaces import ISelectiveLoginSettings
 from collective.selectivelogin.testing import FUNCTIONAL_TESTING
 from plone import api
-from plone.app.testing import SITE_OWNER_NAME, SITE_OWNER_PASSWORD
-from plone.registry.interfaces import IRegistry
+from plone.app.testing import SITE_OWNER_NAME
+from plone.app.testing import SITE_OWNER_PASSWORD
 from plone.testing.z2 import Browser
 from zope.component import getMultiAdapter
-from zope.component import getUtility
 
 import unittest
 
@@ -24,22 +24,22 @@ class SelectiveLoginFunctionalTest(unittest.TestCase):
         self.browser.handleErrors = False
         self.browser.addHeader(
             'Authorization',
-            'Basic %s:%s' % (SITE_OWNER_NAME, SITE_OWNER_PASSWORD,)
+            'Basic {0}:{1}'.format(SITE_OWNER_NAME, SITE_OWNER_PASSWORD)
         )
 
     def test_selectivelogin_controlpanel_link(self):
         self.browser.open(
-            "%s/@@overview-controlpanel" % self.portal_url)
+            '{portal}/@@overview-controlpanel'.format(portal=self.portal_url))
         self.browser.getLink('Selective Login Settings').click()
 
     def test_selectivelogin_controlpanel_backlink(self):
         self.browser.open(
-            "%s/@@selectivelogin-controlpanel" % self.portal_url)
-        self.assertTrue("General" in self.browser.contents)
+            '{portal}/@@selectivelogin-controlpanel'.format(portal=self.portal_url))
+        self.assertTrue('General' in self.browser.contents)
 
     def test_selectivelogin_controlpanel_sidebar(self):
         self.browser.open(
-            "%s/@@selectivelogin-controlpanel" % self.portal_url)
+            '{portal}/@@selectivelogin-controlpanel'.format(portal=self.portal_url))
         self.browser.getLink('Site Setup').click()
         self.assertTrue(
             self.browser.url.endswith('/plone/@@overview-controlpanel')
@@ -47,12 +47,12 @@ class SelectiveLoginFunctionalTest(unittest.TestCase):
 
     def test_selectivelogin_controlpanel_view(self):
         view = getMultiAdapter((self.portal, self.portal.REQUEST),
-                               name="selectivelogin-controlpanel")
+                               name='selectivelogin-controlpanel')
         self.assertTrue(view())
 
     def test_selectivelogin_controlpanel_values(self):
         self.browser.open(
-            "%s/@@selectivelogin-controlpanel" % self.portal_url)
+            '{portal}/@@selectivelogin-controlpanel'.format(portal=self.portal_url))
         self.browser.getControl(
             name='form.widgets.enabled:list').getControl(value='selected', index=0).selected = True
         self.browser.getControl(
@@ -61,10 +61,15 @@ class SelectiveLoginFunctionalTest(unittest.TestCase):
             name='form.widgets.error_message').value = u'You shall not pass!!!'
         self.browser.getControl(name='form.buttons.save').click()
 
-        enabled = api.portal.get_registry_record('enabled', interface=ISelectiveLoginSettings)
+        enabled = api.portal.get_registry_record(
+            'enabled', interface=ISelectiveLoginSettings
+        )
         self.assertTrue(enabled)
-        allowed_domains = api.portal.get_registry_record('allowed_domains', interface=ISelectiveLoginSettings)
-        self.assertEquals(allowed_domains, u'plone.org\nplone.com')
-        error_message = api.portal.get_registry_record('error_message', interface=ISelectiveLoginSettings)
-        self.assertEquals(error_message, u'You shall not pass!!!')
-
+        allowed_domains = api.portal.get_registry_record(
+            'allowed_domains', interface=ISelectiveLoginSettings
+        )
+        self.assertEqual(allowed_domains, u'plone.org\nplone.com')
+        error_message = api.portal.get_registry_record(
+            'error_message', interface=ISelectiveLoginSettings
+        )
+        self.assertEqual(error_message, u'You shall not pass!!!')

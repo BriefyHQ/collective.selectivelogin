@@ -67,7 +67,7 @@ class TestHelpers(unittest.TestCase):
         """Test allowed_domains."""
         func = utils.allowed_domains
         #  By default, False
-        self.assertEquals(func(), [])
+        self.assertEqual(func(), [])
         #  Change
         self._set_allowed_domains(u'plone.org\nplone.com')
         self.assertIn('plone.org', func())
@@ -78,17 +78,17 @@ class TestHelpers(unittest.TestCase):
         """Test get_error_message."""
         func = utils.get_error_message
         #  By default, u'Invalid Domain'
-        self.assertEquals(func(), u'Invalid domain.')
+        self.assertEqual(func(), u'Invalid domain.')
         #  Change
         self._set_error_message(u'You shall not pass!!')
-        self.assertEquals(func(), u'You shall not pass!!')
+        self.assertEqual(func(), u'You shall not pass!!')
 
     def test_user_domain(self):
         """Test user_domain."""
         func = utils.user_domain
-        self.assertEquals(func(self.user_1), 'plone.org')
-        self.assertEquals(func(self.user_2), 'plone.com')
-        self.assertEquals(func(self.user_3), 'fcbarcelona.com')
+        self.assertEqual(func(self.user_1), 'plone.org')
+        self.assertEqual(func(self.user_2), 'plone.com')
+        self.assertEqual(func(self.user_3), 'fcbarcelona.com')
 
     def test_validate_user_domain(self):
         """Test validate_user_domain."""

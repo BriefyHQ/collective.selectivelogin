@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
+"""Test login."""
 from collective.selectivelogin.interfaces import ISelectiveLoginSettings
 from collective.selectivelogin.testing import FUNCTIONAL_TESTING
 from plone import api
-from plone.app.testing import SITE_OWNER_NAME, SITE_OWNER_PASSWORD
-from plone.registry.interfaces import IRegistry
 from plone.testing.z2 import Browser
-from zope.component import getMultiAdapter
-from zope.component import getUtility
 
 import transaction
 import unittest
@@ -53,16 +50,16 @@ class LoginFunctionalTest(unittest.TestCase):
 
     def test_normal_login(self):
         self._disable()
-        self.browser.open("%s/login" % self.portal_url)
+        self.browser.open('{portal}/login'.format(portal=self.portal_url))
         self.browser.getControl(name='__ac_name').value = 'bob'
         self.browser.getControl(name='__ac_password').value = '123456'
         self.browser.getControl(name='submit').click()
         self.assertIn('You are now logged in', self.browser.contents)
-        self.browser.open("%s/logout" % self.portal_url)
+        self.browser.open('{portal}/logout'.format(portal=self.portal_url))
 
     def test_invalid_domain(self):
         self._enable()
-        self.browser.open("%s/login" % self.portal_url)
+        self.browser.open('{portal}/login'.format(portal=self.portal_url))
         self.browser.getControl(name='__ac_name').value = 'bob'
         self.browser.getControl(name='__ac_password').value = '123456'
         self.browser.getControl(name='submit').click()
@@ -70,9 +67,9 @@ class LoginFunctionalTest(unittest.TestCase):
 
     def test_valid_domain(self):
         self._enable()
-        self.browser.open("%s/login" % self.portal_url)
+        self.browser.open('{portal}/login'.format(portal=self.portal_url))
         self.browser.getControl(name='__ac_name').value = 'alice'
         self.browser.getControl(name='__ac_password').value = '123456'
         self.browser.getControl(name='submit').click()
         self.assertIn('You are now logged in', self.browser.contents)
-        self.browser.open("%s/logout" % self.portal_url)
+        self.browser.open('{portal}/logout'.format(portal=self.portal_url))
