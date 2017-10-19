@@ -1,0 +1,12 @@
+<configure
+    xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+    i18n_domain="collective.selectivelogin">
+
+    <subscriber
+        for="Products.PluggableAuthService.interfaces.events.IUserLoggedInEvent"
+        handler=".post_login.login_handler"
+    />
+
+</configure>

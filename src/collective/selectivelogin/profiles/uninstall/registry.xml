@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<registry>
+
+  <records interface="collective.selectivelogin.interfaces.ISelectiveLoginSettings"
+           field="enabled"
+           remove="True" />
+
+  <records interface="collective.selectivelogin.interfaces.ISelectiveLoginSettings"
+           field="allowed_domains"
+           remove="True" />
+
+  <records interface="collective.selectivelogin.interfaces.ISelectiveLoginSettings"
+           field="error_message"
+           remove="True" />
+
+</registry>

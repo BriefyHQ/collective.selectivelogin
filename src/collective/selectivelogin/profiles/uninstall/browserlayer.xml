@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layers>
+  <layer
+    name="collective.selectivelogin"
+    interface="collective.selectivelogin.interfaces.IPasPluginsAuthomaticLayer"
+    remove="True"
+  />
+</layers>

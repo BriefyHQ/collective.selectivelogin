@@ -1,0 +1,17 @@
+<configure
+    i18n_domain="collective.selectivelogin"
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    xmlns:plone="http://namespaces.plone.org/plone">
+
+  <!-- Control panel -->
+  <browser:page
+      class=".controlpanel.SelectiveLoginSettingsEditFormSettingsControlPanel"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      layer="collective.selectivelogin.interfaces.ISelectiveLoginLayer"
+      name="selectivelogin-controlpanel"
+      permission="cmf.ManagePortal"
+  />
+
+</configure>
